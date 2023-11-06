@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Events list</h1>
+    <div class="top-bar">
+        <form method="POST" action="{{ url_for('event_create') }}">
+            <button class="create-event-button">Create event</button>
+        </form>
+        <div class="search-container">
+            <form method="GET" action="{{ url_for('events_list') }}" class="search-form">
+                <input type="text" name="title" placeholder="Search by title"
+                       value="{{ request.args.get('title')|default('', true) }}"
+                       class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+    {% if events %}
+        {% for event in events %}
+            <div class="event-item">
+                <div>
+                    <h2>Event: <a href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h2>
+                    <p>Creator: {{ event.creator.first_name }} {{ event.creator.last_name }}</p>
+                    <p>Description: {{ event.description }}</p>
+                </div>
+                <div>
+                    {% if event.available_for_registration(user_id) %}
+                        <form method="POST" action="{{ url_for('event_user_list', id=event.id,) }}">
+                            <input type="hidden" name="user_id" value="{{ user_id }}">
+                            <button class="register-button">Register</button>
+                        </form>
+                    {% else %}
+                        <button class="register-button" disabled>Register</button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="pagination">
+        {% for page_num in pagination.iter_pages() %}
+            {% if page_num %}
+                <a href="{{ url_for('events_list', page=page_num, size=size) }}">{{ page_num }}</a>
+            {% else %}
+                <span>...</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

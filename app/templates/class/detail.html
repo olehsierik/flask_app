@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Detail Information</h1>
+
+    {% if item %}
+        <ul>
+            {% for attr, value in item.to_dict().items() %}
+                <li><strong>{{ attr }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Object not found.</p>
+    {% endif %}
+{% endblock %}

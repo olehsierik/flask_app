@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ id }} Event users list</h1>
+
+    <div class="user-list">
+        {% if event_users %}
+            {% for user in event_users %}
+                <div class="user-item">
+                    <h2>{{ user.user.first_name }} {{ user.user.last_name }}</h2>
+                    <p class="username">userid:{{ user.user.id }} @{{ user.user.username }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>No users</div>
+        {% endif %}
+    <p><a href="{{ url_for('event_detail', id=id) }}" class="update-event-button">Back to details</a></p>
+    </div>
+
+{% endblock %}

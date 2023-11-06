@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Users list</h1>
+    <div class="user-list">
+        {% if users %}
+            {% for user in users %}
+                <div class="user-item">
+                    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                    <p class="username">@{{ user.username }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>No users</div>
+        {% endif %}
+    </div>
+    <div class="pagination">
+        {% for page_num in pagination.iter_pages() %}
+            {% if page_num %}
+                <a href="{{ url_for('users', page=page_num, size=size) }}">{{ page_num }}</a>
+            {% else %}
+                <span>...</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

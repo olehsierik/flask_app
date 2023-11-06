@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>robot</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+{% if username %}
+    <nav id="menu-container">
+        <ul id="menu">
+            <li><a href="/events">Events</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/logout">LogOut</a></li>
+        </ul>
+    </nav>
+{% endif %}
+
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    <div id="footer-content">
+        {% if username %}
+            Logged in as: {{ username }}
+        {% else %}
+            Not logged in
+        {% endif %}
+    </div>
+</footer>
+</body>
+</html>
